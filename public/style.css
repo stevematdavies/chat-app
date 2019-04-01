@@ -106,12 +106,22 @@ body {
   color: #CFCFCF;
 }
 
-.message-text {
+#message-list {
+  list-style: none;
+}
+
+.message-text-item {
   display: inline-flex;
   justify-content: space-around;
   align-items: center;
 }
 
-.message-text i {
+.message-text-item::before {
+  content: '>';
+  margin-right: 8px;
+}
+
+.message-text-item i {
+  display: block;
   margin-right: 12px;
 }

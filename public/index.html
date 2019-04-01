@@ -13,12 +13,10 @@
         <div class="chat-header">
             <h1><strong>Chat</strong> <i class="material-icons">chat</i> App</h1>
             <h4>Built using <strong>socket.io</strong></h4>
-            <script src="/socket.io/socket.io.js"></script>
-            <script src="io.js"></script>
         </div>
         <div class="chatbox-wrapper">
             <div class="chatbox">
-                    <span class="message-text"><i class="material-icons">chat_bubble</i>This is text</span>
+                <ul id="message-list"></ul>
             </div>
             <div class="chatbox-input">
                 <input type="text" class="chatbox-input-text" placeholder="Write a message" name="search">
@@ -26,5 +24,7 @@
             </div>
         </div>
     </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="io.js"></script>
 </body>
 </html>
