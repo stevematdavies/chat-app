@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i');
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:200,200i,300,300i,400,400i,600,600i,700,700i,900');
 
 body {
   box-sizing: border-box;
@@ -19,4 +20,98 @@ body {
 .container h1 {
   font-weight: 100;
   font-size: 2.4rem;
+}
+
+.container h4 {
+  font-weight: 300;
+  font-size: 1.8rem;
+}
+
+.chat-header {
+  display: flex;
+  flex-direction: column;
+  justify-items: flex-start;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.chatbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.chatbox {
+  width: 400px;
+  height: 600px;
+  border: 1px solid #CFCFCF;
+  background-color: #FDFAFA;
+  font-family: 'Titillium Web', sans-serif;
+  color: #C2D0D1;
+  font-size: 20px;
+  font-weight: 300;
+  padding: 16px;
+}
+
+.chatbox-input {
+  width: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  margin-top: 12px;
+}
+
+.chatbox-input-button {
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content:center;
+  color: #CFCFCF;
+  cursor: pointer;
+}
+
+.chatbox-input-button:hover {
+    color: #575757;
+}
+
+.chatbox-input-text::-webkit-input-placeholder {
+  color: #CFCFCF;
+}
+
+.chatbox-input-text {
+  outline: none;
+  border: none;
+  width: 100%;
+  flex: 2;
+  font-weight: 200;
+  font-size: 1.4rem;
+  color: #575757;
+}
+
+.chatbox-input:before {
+  content: '[';
+  font-weight: 200;
+  font-size: 2rem;
+  margin-right: 12px;
+  color: #CFCFCF;
+}
+
+.chatbox-input:after {
+  content: ']';
+  font-weight: 200;
+  font-size: 2rem;
+  margin-left: 12px;
+  color: #CFCFCF;
+}
+
+.message-text {
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.message-text i {
+  margin-right: 12px;
 }
