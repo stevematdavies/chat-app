@@ -14,6 +14,11 @@ io.on('connection',(socket) => {
 
     socket.broadcast.emit('serverMessage', 'A new user has joined');
 
+    socket.on('locationSent', (coords) => {
+        console.log(coords);
+        io.emit('locationRecieved', coords)
+    });
+
     socket.on('disconnect',() => {
         io.emit('serverMessage', 'A new user left');
     });

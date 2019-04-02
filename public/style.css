@@ -40,6 +40,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  z-index: 100;
 }
 
 .chatbox {
@@ -61,7 +62,7 @@ body {
   justify-content: space-between;
   margin-top: 12px;
 }
-#chatbox-input-button {
+.app-button {
   outline: none;
   border: none;
   display: flex;
@@ -71,7 +72,7 @@ body {
   cursor: pointer;
 }
 
-.chatbox-input-button:hover {
+.app-button:hover {
     color: #575757;
 }
 
@@ -87,34 +88,50 @@ body {
   font-weight: 200;
   font-size: 1.4rem;
   color: #575757;
-}
-
-.chatbox-input:before {
-  content: '[';
-  font-weight: 200;
-  font-size: 2rem;
-  margin-right: 12px;
-  color: #CFCFCF;
-}
-
-.chatbox-input:after {
-  content: ']';
-  font-weight: 200;
-  font-size: 2rem;
-  margin-left: 12px;
-  color: #CFCFCF;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
 }
 
 #message-list {
   list-style: none;
 }
 
-.message-text-item::before {
-  content: '>';
-  margin-right: 8px;
+.message-text-item {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 12px;
+  margin-bottom: 12px;
 }
 
 .message-text-item i {
-  display: block;
-  margin-right: 12px;
+  margin-right: 4px;
+}
+
+#service-message-box {
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 12px;
+  color:rgba(245, 0, 0, 0.906);
+  z-index: 10000;
+  letter-spacing: 4px;
+  border-bottom: 1px dashed rgba(0,0,0,0.1);
+  padding:8px;
+}
+
+.location i {
+  color: rgb(128, 130, 199);
+}
+.location-link {
+  text-decoration: none;
+  font-weight: 300;
+  color: rgb(128, 130, 199);
+  margin-bottom: 6px;
+  border-bottom: 1px dashed rgb(128, 130, 199);
 }
