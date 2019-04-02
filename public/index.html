@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Node Chat App</title>
 </head>
+
 <body>
     <div class="container">
         <div class="chat-header">
             <h1><strong>Chat</strong> <i class="material-icons">chat</i> App</h1>
-            <h4>Built using <strong>socket.io</strong></h4>
         </div>
-
         <div class="chatbox-wrapper">
             <div class="chatbox">
                 <div id="service-message-box"></div>
@@ -22,27 +22,20 @@
             </div>
             <div class="chatbox-input">
                 <input type="text" id="chatbox-input-text" placeholder="Write a message" name="search">
-                <button
-                    title="send"
-                    id="chatbox-input-button"
-                    class="app-button">
-                        <i class="material-icons">send</i>
+                <button title="send" id="chatbox-input-button" class="app-button">
+                    <i class="material-icons">send</i>
                 </button>
-                <button
-                    title="send-location"
-                    id="chatbox-location-button"
-                    class="app-button">
-                        <i class="material-icons">place</i>
+                <button title="send-location" id="chatbox-location-button" class="app-button">
+                    <i class="material-icons">place</i>
                 </button>
             </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous">
-    </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous">
+        </script>
     <script src="io.js"></script>
 </body>
+
 </html>

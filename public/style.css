@@ -109,16 +109,13 @@ body {
 }
 
 #service-message-box {
-  z-index: 10001;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 40px;
   margin-bottom: 16px;
-  text-transform: uppercase;
   font-weight: 300;
-  font-size: 12px;
-  color:rgba(245, 0, 0, 0.906);
+  color:rgba(64, 255, 0, 0.906);
   z-index: 10000;
   letter-spacing: 4px;
   border-bottom: 1px dashed rgba(0,0,0,0.1);
@@ -130,8 +127,26 @@ body {
 }
 .location-link {
   text-decoration: none;
+  display: inline-flex;
+  align-items: center;
   font-weight: 300;
   color: rgb(128, 130, 199);
   margin-bottom: 6px;
   border-bottom: 1px dashed rgb(128, 130, 199);
+  display: inline-flex;
+  align-items: center;
+}
+.warning-item {
+  display: inline-flex;
+  align-items: center;
+  color: red;
+  font-weight: 300;
+}
+
+#message-form {
+  width: 100%;
+  display: flex;
+  align-items:center;
+  justify-content: space-between;
+  margin-top: 12px;
 }
