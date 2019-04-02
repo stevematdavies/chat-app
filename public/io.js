@@ -15,20 +15,22 @@ const disableFormElements = () => {
     locationButton.prop('disabled', true);
 }
 
-const addToChat = (element, classes) => {
-    const listItem = $('<li class="message-text-item"></li>');
-    if (classes.length > 0) {
-        classes.forEach(c => listItem.addClass(c))
-    }
+const addToChat = (element) => {
+    const listItem = $('<li class="message-list-item"></li>');
     listItem.append(element);
     $('#message-list').append(listItem);
-    chatbox.scrollTop($('.message-text-item:last').position().top)
+    chatbox.scrollTop($('.message-list-item:last').position().top)
 
 }
 
 const appendMessage = (message) => {
-    const item =  `<i class="material-icons">chat</i>${message}</li>`;
-    addToChat(item,[]);
+    const messagetime = `Sent on: ${moment(new Date())}`;
+    const messageContainer = $(`<div class="message-item-container"></div>`)
+    const messageItem =  $(`<div class="message-item-container-text"><i class="material-icons">chat</i>${message}</div>`);
+    const dateItem =     $(`<div class="message-item-container-time">${messagetime}</div>`);
+    messageContainer.append(messageItem);
+    messageContainer.append(dateItem)
+    addToChat(messageContainer);
 }
 
 socket.on('onClientMessageRecieved', message => {
@@ -58,11 +60,13 @@ locationLinkAction = (url) => {
 
 socket.on('locationRecieved',url => {
     enableFormElements();
-    const linkElement = $('<a class="location-link">See my location</a>');
+    const locationContainer = $('<div class="location-item-container"></div>')
+    const linkElement = $('<div class="location-item-container-link"><a>See my location</a></div>');
     const iconElement = $('<i class="material-icons">explore</i>');
-    linkElement.prepend(iconElement);
+    linkElement.prepend(iconElement)
     linkElement.click(() => locationLinkAction(url));
-    addToChat(linkElement, ['location']);
+    locationContainer.append(linkElement);
+    addToChat(locationContainer);
 });
 
 locationButton.click((e) => {
@@ -89,6 +93,7 @@ sendButton.click((e) => {
                 let warningIcon = $('<i class="material-icons">warning</i>');
                 warningItem.prepend(warningIcon);
                 addToChat(warningItem, ['warning'])
+                enableFormElements();
             }
            return
         });
