@@ -12,6 +12,10 @@ socket.on('onClientMessageRecieved', message => {
     appendMessage(message);
 });
 
+socket.on('serverMessage',(message) => {
+    console.log(message);
+})
+
 button.click(() => {
     const input = document.getElementById('chatbox-input-text');
     const message = input.value;
