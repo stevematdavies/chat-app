@@ -24,13 +24,26 @@ socket.on('serverMessage',(message) => {
     },5000);
 });
 
+locationLinkAction = (url) => {
+    window.open(url,
+        'My location',
+        `directories=no,
+        titlebar=no,
+        toolbar=no,
+        location=no,
+        status=no,
+        menubar=no,
+        width=1024,height=768`);
+}
+
 socket.on('locationRecieved',coords => {
     const { latitude, longitude } = coords;
-    const gmLink = `https://google.com/maps/?q=${latitude},${longitude}`;
-    $('#message-list').append(`<li class="message-text-item location">
-        <i class="material-icons">explore</i>
-        <a href=${gmLink} class="location-link" target="__blank">See my Location</a>
-    </li>`);
+    const url = `https://google.com/maps/?q=${latitude},${longitude}`;
+    const linkElement = $('<a class="location-link">See my location</a>');
+    linkElement.click(() => locationLinkAction(url));
+    const listElement = $(`<li class="message-text-item location"><i class="material-icons">explore</i</li>`);
+    listElement.append(linkElement);
+    $('#message-list').append(listElement);
 });
 
 locationButton.click((e) => {
