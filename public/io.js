@@ -3,6 +3,7 @@ const socket = io();
 const chats = $('#message-list');
 const sendButton = $('#chatbox-input-button');
 const locationButton = $('#chatbox-location-button');
+const chatbox = $('#chatbox');
 
 const enableFormElements = () => {
     sendButton.prop('disabled', false);
@@ -20,8 +21,9 @@ const addToChat = (element, classes) => {
         classes.forEach(c => listItem.addClass(c))
     }
     listItem.append(element);
-    console.log(listItem);
     $('#message-list').append(listItem);
+    chatbox.scrollTop($('.message-text-item:last').position().top)
+
 }
 
 const appendMessage = (message) => {
