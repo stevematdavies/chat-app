@@ -61,8 +61,7 @@ body {
   justify-content: space-between;
   margin-top: 12px;
 }
-
-.chatbox-input-button {
+#chatbox-input-button {
   outline: none;
   border: none;
   display: flex;
@@ -76,11 +75,11 @@ body {
     color: #575757;
 }
 
-.chatbox-input-text::-webkit-input-placeholder {
+#chatbox-input-text::-webkit-input-placeholder {
   color: #CFCFCF;
 }
 
-.chatbox-input-text {
+#chatbox-input-text {
   outline: none;
   border: none;
   width: 100%;
@@ -108,12 +107,6 @@ body {
 
 #message-list {
   list-style: none;
-}
-
-.message-text-item {
-  display: inline-flex;
-  justify-content: space-around;
-  align-items: center;
 }
 
 .message-text-item::before {

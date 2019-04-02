@@ -19,12 +19,17 @@
                 <ul id="message-list"></ul>
             </div>
             <div class="chatbox-input">
-                <input type="text" class="chatbox-input-text" placeholder="Write a message" name="search">
-                <button class="chatbox-input-button"> <i class="material-icons">send</i></button>
+                <input type="text" id="chatbox-input-text" placeholder="Write a message" name="search">
+                <button id="chatbox-input-button"> <i class="material-icons">send</i></button>
             </div>
         </div>
     </div>
     <script src="/socket.io/socket.io.js"></script>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous">
+    </script>
     <script src="io.js"></script>
 </body>
 </html>

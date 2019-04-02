@@ -1,16 +1,25 @@
 const socket = io();
 
-const chats = document.getElementById('message-list');
+const chats = $('#message-list');
+const button = $('#chatbox-input-button');
 
 const appendMessage = (message) => {
-    const node = document.createElement('LI');
-    const textNode = document.createTextNode(message);
-    node.className = 'message-text-item';
-    node.appendChild(textNode);
-    chats.appendChild(node);
+    const item =  `<li class="message-text-item">${message}</li>`;
+    $('#message-list').append(item);
 }
 
-socket.on('countUpdated', () => {
-    console.log('the count has been updated!');
-    appendMessage('the count has been updated!');
+socket.on('onClientMessageRecieved', message => {
+    appendMessage(message);
 });
+
+button.click(() => {
+    const input = document.getElementById('chatbox-input-text');
+    const message = input.value;
+    if (message) {
+        socket.emit('onClientMessageSent', message);
+        document.getElementById('chatbox-input-text').value = '';
+        return;
+    } else {
+        return;
+    }
+})

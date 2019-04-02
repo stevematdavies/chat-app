@@ -10,11 +10,10 @@ const port = process.env.PORT | 3000;
 
 app.use(express.static(path.join(__dirname, '../public')));
 
-let COUNT = 0;
-
 io.on('connection',(socket) => {
-    console.log('New Socket connection!');
-    socket.emit('countUpdated')
+    socket.on('onClientMessageSent', message => {
+        io.emit('onClientMessageRecieved', message);
+    });
 });
 
 server.listen(port, () => {
