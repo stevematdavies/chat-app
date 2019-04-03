@@ -19,34 +19,31 @@
             <div class="large-12 columns">
                 <div class="chat-header">
                     <h1><strong>Chat</strong> <i class="material-icons">chat</i> App</h1>
-                    <p class="action-text">Sign up, and join a chat room!</p>
+                    <p class="action-text">Join a chat room!</p>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <form id="sign-up-form" action="/chat">
+            <div class="join-form-wrapper">
+                <form id="sign-up-form" action="/chat.html">
+                    <div class="input-group">
+                        <label>Display / Username
+                            <input type="text" name="username" required>
+                        </label>
+                    </div>
 
-                <div class="input-group">
-                            <label>Display / Username
-                                <input type="text" name="username" required>
-                            </label>
-               </div>
+                    <div class="input-group">
+                        <label>Room
+                            <input type="text" name="room" required>
+                        </label>
+                    </div>
 
-                        <div  class="input-group">
-                            <label>Room
-                                <input type="text" name="room" required>
-                            </label>
-                        </div>
-
-                        <div  class="input-group">
-                            <input type="submit" class="button expanded" value="Join">
-                        </div>
-
-
-
-
-            </form>
+                    <div class="input-group">
+                        <input type="submit" class="button expanded" value="Join">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 
