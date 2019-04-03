@@ -7,61 +7,46 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.5.3/css/foundation.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles/join.style.css">
     <title>Node Chat App</title>
 </head>
 
 <body>
+
     <div class="container">
 
         <div class="row">
             <div class="large-12 columns">
                 <div class="chat-header">
                     <h1><strong>Chat</strong> <i class="material-icons">chat</i> App</h1>
-                    <p>Created with <strong>Socket.io</strong></p>
+                    <p class="action-text">Sign up, and join a chat room!</p>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            <div class="large-12 columns">
-                <div class="chatbox-wrapper">
-                    <div id="chatbox">
-                        <ul id="message-list"></ul>
-                    </div>
-                </div>
-            </div>
+            <form id="sign-up-form" action="/chat">
 
-        </div>
+                <div class="input-group">
+                            <label>Display / Username
+                                <input type="text" name="username" required>
+                            </label>
+               </div>
 
-
-        <div class="row">
-            <div class="large-12 columns">
-
-                <form role="form" id="message-form">
-
-                    <div class="input-group">
-
-                        <input class="input-group-field" placeholder="Write your message" id="chatbox-input" type="text">
-
-                        <div class="input-group-button">
-                            <a id="chatbox-input-button" class="app-button button success">
-                                <i class="material-icons">send</i>
-                            </a>
+                        <div  class="input-group">
+                            <label>Room
+                                <input type="text" name="room" required>
+                            </label>
                         </div>
 
-                        &nbsp;
-
-                        <div class="input-group-button">
-                            <a id="chatbox-location-button" class="app-button button info">
-                                <i class="material-icons">explore</i>
-                            </a>
+                        <div  class="input-group">
+                            <input type="submit" class="button expanded" value="Join">
                         </div>
 
-                    </div>
 
-                </form>
-            </div>
+
+
+            </form>
         </div>
     </div>
 
@@ -69,7 +54,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js"></script>
-    <script src="io.js"></script>
+    <script src="scripts/join.js"></script>
 </body>
 
 </html>
