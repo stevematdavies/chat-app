@@ -16,21 +16,24 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 io.on('connection',(socket) => {
 
-    socket.on('locationSent', (coords) => {
-        const { latitude, longitude } = coords;
-        const url = `https://google.com/maps/?q=${latitude},${longitude}`;
-        io.emit('locationRecieved', generateLocation(url));
+    socket.on('join', (data, callback) => {
+
+        const userToJoin = {id: socket.id, ...data};
+        const {user, error }  =  addUser(userToJoin);
+
+        if (error) {return callback(error)}
+        socket.join(user.room);
+        socket.emit('serverMessage', generateMessage(`Welcome ${user.username}`));
+        socket.broadcast.to(user.room).emit('serverMessage',generateMessage(`${ user.username} has joined!`));
+        callback()
     });
 
-    socket.on('disconnect',() => {
-        io.emit('serverMessage', generateMessage('A user has left'));
+    socket.on('disconnect', () => {
+        const removedUser = removeUser(socket.id);
+        if(removedUser) {
+            io.to(removedUser.room).emit('serverMessage', generateMessage(`${removedUser.username}, has left the room`));
+        }
     });
-
-    socket.on('join',({username, room }) => {
-        socket.join(room);
-        socket.emit('serverMessage', generateMessage(`Welcome ${username}`));
-        socket.broadcast.to(room).emit('serverMessage',generateMessage(`${username} has joined!`));
-    })
 
     socket.on('onClientMessageSent', (message, callback) => {
         const filter = new Filter()
@@ -39,6 +42,13 @@ io.on('connection',(socket) => {
         }
         io.to('Digia').emit('onClientMessageRecieved', generateMessage(message));
     });
+
+    socket.on('locationSent', (coords) => {
+        const { latitude, longitude } = coords;
+        const url = `https://google.com/maps/?q=${latitude},${longitude}`;
+        io.emit('locationRecieved', generateLocation(url));
+    });
+
 });
 
 server.listen(port, () => {

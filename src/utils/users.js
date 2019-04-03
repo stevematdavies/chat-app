@@ -10,7 +10,6 @@ const addUser = ({id, username, room}) => {
         }
     }
 
-    const newUser = {id, username, room};
     const userExists = users.find(u => u.room === room && u.username === username);
 
     if(userExists) {
@@ -19,8 +18,9 @@ const addUser = ({id, username, room}) => {
         }
     }
 
-    users.push(newUser);
-    return newUser;
+    const user = { id, username, room }
+    users.push(user)
+    return { user };
 }
 
 const getUser = id =>  users.find(u => u.id === id);
@@ -43,6 +43,3 @@ module.exports = {
     getUser,
     getUsersForRoom
 };
-
-
-

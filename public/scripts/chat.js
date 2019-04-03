@@ -120,4 +120,11 @@ sendButton.click((e) => {
     }
 });
 
-socket.emit('join', {username, room});
+socket.emit('join', {username, room}, error => {
+    if(error){
+        let errorItem = $(`<span class="warning-item">${error}</span>`);
+        let errorIcon = $('<i class="material-icons">report_problem</i>');
+        errorItem.prepend(errorIcon);
+        addToChat(errorItem)
+    }
+});
