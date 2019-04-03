@@ -4,6 +4,8 @@ const path = require('path');
 const socketio = require('socket.io');
 const Filter = require('bad-words');
 
+const { generateMessage, generateLocation} = require('./utils/messages');
+
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
@@ -13,24 +15,24 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 io.on('connection',(socket) => {
 
-    socket.broadcast.emit('serverMessage', 'A new user has joined');
+    socket.broadcast.emit('serverMessage', generateMessage('A new user has joined'));
 
     socket.on('locationSent', (coords) => {
         const { latitude, longitude } = coords;
         const url = `https://google.com/maps/?q=${latitude},${longitude}`;
-        io.emit('locationRecieved', url)
+        io.emit('locationRecieved', generateLocation(url));
     });
 
     socket.on('disconnect',() => {
-        io.emit('serverMessage', 'A new user left');
+        io.emit('serverMessage', generateMessage('A user has left'));
     });
 
     socket.on('onClientMessageSent', (message, callback) => {
         const filter = new Filter()
         if (filter.isProfane(message)) {
-            return callback('Watch your language please!!');
+            return callback(generateMessage('Watch your language please!!'));
         }
-        io.emit('onClientMessageRecieved', message);
+        io.emit('onClientMessageRecieved', generateMessage(message));
     });
 });
 

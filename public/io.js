@@ -4,6 +4,10 @@ const chats = $('#message-list');
 const sendButton = $('#chatbox-input-button');
 const locationButton = $('#chatbox-location-button');
 const chatbox = $('#chatbox');
+const messageInput = $('#chatbox-input');
+
+const createDateElement = (date, prefix) =>
+    `<span><strong>${prefix}</strong>&nbsp;<em>${moment(date).format('h:mm a')}</em></span>`;
 
 const enableFormElements = () => {
     sendButton.prop('disabled', false);
@@ -20,30 +24,48 @@ const addToChat = (element) => {
     listItem.append(element);
     $('#message-list').append(listItem);
     chatbox.scrollTop($('.message-list-item:last').position().top)
-
 }
 
 const appendMessage = (message) => {
-    const messagetime = `Sent on: ${moment(new Date())}`;
+    const { txt, createdAt } = message;
+    const dateEl = createDateElement(createdAt, 'Created at: ');
     const messageContainer = $(`<div class="message-item-container"></div>`)
-    const messageItem =  $(`<div class="message-item-container-text"><i class="material-icons">chat</i>${message}</div>`);
-    const dateItem =     $(`<div class="message-item-container-time">${messagetime}</div>`);
+    const messageItem = $(`<div class="message-item-container-text"><i class="material-icons">chat</i>${txt}</div>`);
+    const dateItem = $(`<div class="message-item-container-time">${dateEl}</div>`);
     messageContainer.append(messageItem);
     messageContainer.append(dateItem)
     addToChat(messageContainer);
 }
 
-socket.on('onClientMessageRecieved', message => {
+socket.on('onClientMessageRecieved', response => {
     enableFormElements();
-    appendMessage(message);
+    appendMessage(response);
 });
 
-socket.on('serverMessage',(message) => {
-    const messageEl =`<p class="server-m">${message}</p>`;
-    $('#service-message-box').append(messageEl);
-    setTimeout(() => {
-        $('.server-m').remove();
-    },5000);
+socket.on('serverMessage', (message) => {
+    const { txt, createdAt } = message;
+    const dateEl = createDateElement(createdAt,'Sent at: ');
+    const messageContainer = $(`<div class="message-item-container"></div>`)
+    const messageItem = $(`<div class="message-item-container-text server-m"><i class="material-icons">info</i>${txt}</div>`);
+    const dateItem = $(`<div class="message-item-container-time">${dateEl}</div>`);
+    messageContainer.append(messageItem);
+    messageContainer.append(dateItem)
+    addToChat(messageContainer);
+});
+
+socket.on('locationRecieved', data => {
+    enableFormElements();
+    const { url, createdAt } = data;
+    const dateEl = createDateElement(createdAt, 'Sent at: ');
+    const locationContainer = $('<div class="location-item-container"></div>')
+    const linkElement = $('<div class="location-item-container-link"><a>See my location</a></div>');
+    const iconElement = $('<i class="material-icons">explore</i>');
+    const dateItem = $(`<div class="message-item-container-time">${dateEl}</div>`);
+    linkElement.prepend(iconElement)
+    linkElement.click(() => locationLinkAction(url));
+    locationContainer.append(linkElement);
+    locationContainer.append(dateItem);
+    addToChat(locationContainer);
 });
 
 locationLinkAction = (url) => {
@@ -58,46 +80,35 @@ locationLinkAction = (url) => {
         width=1024,height=768`);
 }
 
-socket.on('locationRecieved',url => {
-    enableFormElements();
-    const locationContainer = $('<div class="location-item-container"></div>')
-    const linkElement = $('<div class="location-item-container-link"><a>See my location</a></div>');
-    const iconElement = $('<i class="material-icons">explore</i>');
-    linkElement.prepend(iconElement)
-    linkElement.click(() => locationLinkAction(url));
-    locationContainer.append(linkElement);
-    addToChat(locationContainer);
-});
-
 locationButton.click((e) => {
     e.preventDefault();
-    if(!navigator.geolocation) {
+    if (!navigator.geolocation) {
         return alert('geolocation is not supported by your browser')
     }
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
-        socket.emit('locationSent',{ latitude, longitude });
+        socket.emit('locationSent', { latitude, longitude });
         disableFormElements();
     });
 });
 
 sendButton.click((e) => {
     e.preventDefault();
-    const input = document.getElementById('chatbox-input-text');
-    const message = input.value;
-    if (message) {
-        socket.emit('onClientMessageSent', message, (wordWarning) => {
+    const message = messageInput.val();
+    if (message) {
+        socket.emit('onClientMessageSent', message, (warning) => {
             disableFormElements();
-            if(wordWarning) {
-                let warningItem = $(`<span class="warning-item">${wordWarning}</span>`);
+            if (warning) {
+                const { txt } = warning
+                let warningItem = $(`<span class="warning-item">${txt}</span>`);
                 let warningIcon = $('<i class="material-icons">warning</i>');
                 warningItem.prepend(warningIcon);
                 addToChat(warningItem, ['warning'])
                 enableFormElements();
             }
-           return
+            return
         });
-        document.getElementById('chatbox-input-text').value = '';
+        messageInput.val('');
         enableFormElements();
         return;
     } else {
