@@ -5,6 +5,7 @@ const socketio = require('socket.io');
 const Filter = require('bad-words');
 
 const { generateMessage, generateLocation} = require('./utils/messages');
+const {addUser, removeUser, getUser, getUsersForRoom } = require('./utils/users');
 
 const app = express();
 const server = http.createServer(app);
