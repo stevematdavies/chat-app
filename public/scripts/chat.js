@@ -1,5 +1,9 @@
 const socket = io();
 
+const { username, room } = Qs.parse(location.search, { ignoreQueryPrefix: true});
+
+$('#room-name').text(room);
+
 const chats = $('#message-list');
 const sendButton = $('#chatbox-input-button');
 const locationButton = $('#chatbox-location-button');
@@ -114,4 +118,6 @@ sendButton.click((e) => {
     } else {
         return;
     }
-})
+});
+
+socket.emit('join', {username, room});
