@@ -58,7 +58,6 @@ body {
 }
 
 #message-form {
-  background-color: red;;
   width: 400px;
   display: flex;
   justify-content: space-between;
@@ -127,4 +126,15 @@ body {
 
 .server-m {
   color: orange;
+}
+
+.app-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+.app-button i {
+  color: white;
 }
