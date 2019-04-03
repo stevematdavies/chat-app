@@ -31,11 +31,13 @@ const addToChat = (element) => {
 }
 
 const appendMessage = (message) => {
-    const { txt, createdAt } = message;
+    const { username, txt, createdAt } = message;
     const dateEl = createDateElement(createdAt, 'Created at: ');
     const messageContainer = $(`<div class="message-item-container"></div>`)
-    const messageItem = $(`<div class="message-item-container-text"><i class="material-icons">chat</i>${txt}</div>`);
+    const messageItem = $(`<div class="message-item-container-username">${txt}</div>`);
+    const usernameItem = $(`<div class="message-item-container-text"><i class="material-icons">face</i>${username}</div>`);
     const dateItem = $(`<div class="message-item-container-time">${dateEl}</div>`);
+    messageContainer.append(usernameItem);
     messageContainer.append(messageItem);
     messageContainer.append(dateItem)
     addToChat(messageContainer);
@@ -47,7 +49,7 @@ socket.on('onClientMessageRecieved', response => {
 });
 
 socket.on('serverMessage', (message) => {
-    const { txt, createdAt } = message;
+    const { username, txt, createdAt } = message;
     const dateEl = createDateElement(createdAt,'Sent at: ');
     const messageContainer = $(`<div class="message-item-container"></div>`)
     const messageItem = $(`<div class="message-item-container-text server-m"><i class="material-icons">info</i>${txt}</div>`);
@@ -57,12 +59,12 @@ socket.on('serverMessage', (message) => {
     addToChat(messageContainer);
 });
 
-socket.on('locationRecieved', data => {
+socket.on('locationRecieved', (data) => {
     enableFormElements();
-    const { url, createdAt } = data;
+    const { username, url, createdAt } = data;
     const dateEl = createDateElement(createdAt, 'Sent at: ');
     const locationContainer = $('<div class="location-item-container"></div>')
-    const linkElement = $('<div class="location-item-container-link"><a>See my location</a></div>');
+    const linkElement = $(`<div class="location-item-container-link"><a>${username} has shared their location</a></div>`);
     const iconElement = $('<i class="material-icons">explore</i>');
     const dateItem = $(`<div class="message-item-container-time">${dateEl}</div>`);
     linkElement.prepend(iconElement)
@@ -100,7 +102,7 @@ sendButton.click((e) => {
     e.preventDefault();
     const message = messageInput.val();
     if (message) {
-        socket.emit('onClientMessageSent', message, (warning) => {
+        socket.emit('onClientMessageSent', (message), (warning) => {
             disableFormElements();
             if (warning) {
                 const { txt } = warning

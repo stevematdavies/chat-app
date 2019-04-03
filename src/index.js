@@ -23,30 +23,37 @@ io.on('connection',(socket) => {
 
         if (error) {return callback(error)}
         socket.join(user.room);
-        socket.emit('serverMessage', generateMessage(`Welcome ${user.username}`));
-        socket.broadcast.to(user.room).emit('serverMessage',generateMessage(`${ user.username} has joined!`));
+        socket.emit('serverMessage', generateMessage(user.username,`Welcome ${user.username}`));
+        socket.broadcast.to(user.room).emit('serverMessage',generateMessage(user.username,`${ user.username} has joined!`));
         callback()
     });
 
     socket.on('disconnect', () => {
         const removedUser = removeUser(socket.id);
         if(removedUser) {
-            io.to(removedUser.room).emit('serverMessage', generateMessage(`${removedUser.username}, has left the room`));
+            io.to(removedUser.room).emit('serverMessage', generateMessage(removeUser.username,`${removedUser.username}, has left the room`));
         }
     });
 
     socket.on('onClientMessageSent', (message, callback) => {
-        const filter = new Filter()
+
+        const filter = new Filter();
+        const user = getUser(socket.id);
+
         if (filter.isProfane(message)) {
-            return callback(generateMessage('Watch your language please!!'));
+            return callback(generateMessage(user.username, 'Watch your language please!!'));
         }
-        io.to('Digia').emit('onClientMessageRecieved', generateMessage(message));
+
+        io.to(user.room).emit('onClientMessageRecieved', generateMessage(user.username,message));
+
+        callback();
     });
 
     socket.on('locationSent', (coords) => {
         const { latitude, longitude } = coords;
+        const user = getUser(socket.id);
         const url = `https://google.com/maps/?q=${latitude},${longitude}`;
-        io.emit('locationRecieved', generateLocation(url));
+        io.to(user.room).emit('locationRecieved', generateLocation(user.username, url));
     });
 
 });
