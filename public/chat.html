@@ -25,44 +25,54 @@
 
         <div class="row">
             <div class="large-12 columns">
-                <div class="chatbox-wrapper">
-                    <div id="chatbox">
-                        <ul id="message-list"></ul>
+
+                <div class="row">
+                    <div class="chat-container">
+
+                        <div class="user-list-wrapper">
+                        <div class="user-list-hdr">Users</div>
+                            <ul id="user-list"></ul>
+                        </div>
+
+                        <div class="chatbox-wrapper">
+                            <div id="chatbox">
+                                <ul id="message-list"></ul>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </div>
 
-        </div>
+                <div class="row chat-input-row">
+                    <form role="form" id="message-form">
 
+                            <div class="input-group">
 
-        <div class="row">
-            <div class="large-12 columns">
+                                <input class="input-group-field" placeholder="Write your message" id="chatbox-input"
+                                    type="text">
 
-                <form role="form" id="message-form">
+                                <div class="input-group-button">
+                                    <a id="chatbox-input-button" class="app-button button success">
+                                        <i class="material-icons">send</i>
+                                    </a>
+                                </div>
 
-                    <div class="input-group">
+                                &nbsp;
 
-                        <input class="input-group-field" placeholder="Write your message" id="chatbox-input" type="text">
+                                <div class="input-group-button">
+                                    <a id="chatbox-location-button" class="app-button button info">
+                                        <i class="material-icons">explore</i>
+                                    </a>
+                                </div>
 
-                        <div class="input-group-button">
-                            <a id="chatbox-input-button" class="app-button button success">
-                                <i class="material-icons">send</i>
-                            </a>
-                        </div>
+                            </div>
 
-                        &nbsp;
+                    </form>
+                </div>
 
-                        <div class="input-group-button">
-                            <a id="chatbox-location-button" class="app-button button info">
-                                <i class="material-icons">explore</i>
-                            </a>
-                        </div>
-
-                    </div>
-
-                </form>
             </div>
         </div>
+
     </div>
 
     <script src="/socket.io/socket.io.js"></script>

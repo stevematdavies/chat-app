@@ -40,6 +40,11 @@
   align-items: center;
 }
 
+.chat-input-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
 #message-form-button-group {
   width:100px;
 }
@@ -113,4 +118,46 @@
 
 .app-button i {
   color: white;
+}
+
+.chat-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.chatbox-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-list-wrapper {
+  display: flex;
+  width:  120px;
+  flex-direction: column;
+  margin-right: 12px;
+  align-items: flex-start;
+  padding:0;
+  justify-content: flex-start;
+}
+
+#user-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  padding: 2px;
+  margin-bottom: 10px;
+}
+
+#user-list li i {
+  margin-right: 6px;
+}
+
+.user-list-hdr {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-weight: 400;
+  margin-bottom: 16px;
 }

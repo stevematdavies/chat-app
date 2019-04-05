@@ -14,6 +14,8 @@ const port = process.env.PORT | 3000;
 
 app.use(express.static(path.join(__dirname, '../public')));
 
+
+
 io.on('connection',(socket) => {
 
     socket.on('join', (data, callback) => {
@@ -25,27 +27,26 @@ io.on('connection',(socket) => {
         socket.join(user.room);
         socket.emit('serverMessage', generateMessage(user.username,`Welcome ${user.username}`));
         socket.broadcast.to(user.room).emit('serverMessage',generateMessage(user.username,`${ user.username} has joined!`));
+        io.to(user.room).emit('userListUpdated', getUsersForRoom(user.room));
         callback()
     });
 
     socket.on('disconnect', () => {
         const removedUser = removeUser(socket.id);
         if(removedUser) {
-            io.to(removedUser.room).emit('serverMessage', generateMessage(removeUser.username,`${removedUser.username}, has left the room`));
+            const { room, username } = removedUser;
+            io.to(room).emit('serverMessage', generateMessage(username,`${username}, has left the room`));
+            io.to(room).emit('userListUpdated', getUsersForRoom(room));
         }
     });
 
     socket.on('onClientMessageSent', (message, callback) => {
-
         const filter = new Filter();
-        const user = getUser(socket.id);
-
+        const { room, username } = getUser(socket.id);
         if (filter.isProfane(message)) {
-            return callback(generateMessage(user.username, 'Watch your language please!!'));
+            return callback(generateMessage(username, 'Watch your language please!!'));
         }
-
-        io.to(user.room).emit('onClientMessageRecieved', generateMessage(user.username,message));
-
+        io.to(room).emit('onClientMessageRecieved', generateMessage(username,message));
         callback();
     });
 
@@ -55,7 +56,6 @@ io.on('connection',(socket) => {
         const url = `https://google.com/maps/?q=${latitude},${longitude}`;
         io.to(user.room).emit('locationRecieved', generateLocation(user.username, url));
     });
-
 });
 
 server.listen(port, () => {

@@ -9,6 +9,7 @@ const sendButton = $('#chatbox-input-button');
 const locationButton = $('#chatbox-location-button');
 const chatbox = $('#chatbox');
 const messageInput = $('#chatbox-input');
+const userList = $('#user-list');
 
 const createDateElement = (date, prefix) =>
     `<span><strong>${prefix}</strong>&nbsp;<em>${moment(date).format('h:mm a')}</em></span>`;
@@ -73,6 +74,17 @@ socket.on('locationRecieved', (data) => {
     locationContainer.append(dateItem);
     addToChat(locationContainer);
 });
+
+socket.on('userListUpdated', users => {
+    userList.empty();
+    users.forEach(user => {
+        let listElement = $('<li></li>')
+        let iconElement = $('<i class="material-icons">face</i>');
+        listElement.append(iconElement);
+        listElement.append($(`<span>${user.username}</span>`));
+        userList.append(listElement);
+    })
+})
 
 locationLinkAction = (url) => {
     window.open(url,
